@@ -2,30 +2,17 @@ package nkamolba.broker;
 
 import java.net.Socket;
 import java.io.*;
-import nkamolba.util.SocketStream;
+import nkamolba.util.RouterClient;;
 
-class InternalBroker extends SocketStream {
-
-    private String id;
+class InternalBroker extends RouterClient {
 
     public InternalBroker(Socket socket) {
         super(socket);
     }
         
     public void run() {
-        getUniqueID();
+        getUniqueId();
         runConsole();
-    }
-
-    private void getUniqueID() {
-        try {
-            String response = reader.readLine();
-            id = response;
-            System.out.println("Receive unique ID from the router: " + id);
-
-        } catch (IOException e) {
-            System.out.println("I/O error: " + e.getMessage());
-        }
     }
 
     private void runConsole() {
