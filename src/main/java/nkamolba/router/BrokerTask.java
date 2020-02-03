@@ -1,12 +1,15 @@
+package nkamolba.router;
+
 import java.io.*;
 import java.net.*;
-import java.util.concurrent.*;
+import nkamolba.util.SocketStream;
 
-class BrokerTask implements Runnable {
+class BrokerTask extends SocketStream implements Runnable{
 
     Socket socket;
 
     BrokerTask(Socket socket) {
+        super(socket);
         this.socket = socket;
     }
 
@@ -14,11 +17,6 @@ class BrokerTask implements Runnable {
         System.out.println("New broker connected");
         try {
             while (socket.isConnected()) {
-                
-                InputStream input = socket.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                OutputStream output = socket. getOutputStream();
-                PrintWriter writer = new PrintWriter(output, true);
 
                 String response = reader.readLine();
                 if (response == null) {
@@ -26,7 +24,6 @@ class BrokerTask implements Runnable {
                 }
 
                 System.out.println("Received message: " + response);
-
                 writer.println("Router received message: " + response);
             }
         } catch (IOException e) {
