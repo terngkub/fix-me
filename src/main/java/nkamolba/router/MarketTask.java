@@ -3,23 +3,24 @@ package nkamolba.router;
 import java.io.*;
 import java.net.*;
 
-class MarketTask implements Runnable {
+class MarketTask extends RouterTask implements Runnable {
 
-    Socket socket;
-
-    MarketTask(Socket socket) {
-        this.socket = socket;
+    MarketTask(Socket socket, String id) {
+        super(socket, id);
     }
 
     public void run() {
-        System.out.println("New market connected");
+        System.out.println("Market [" + id + "] connected to the router");
         try {
-            OutputStream output = socket. getOutputStream();
-            PrintWriter writer = new PrintWriter(output, true);
-            writer.println("Hello market");
+            registerMarket();
         } catch (IOException e) {
-            
+            System.err.println("I/O error: " + e.getMessage());
         }
     }
 
+    private void registerMarket() throws IOException {
+        String response = reader.readLine();
+        System.out.println("Market [" + id + "] is registering its market name");
+        RoutingTable.registerMarket(response, socket);
+    }
 }

@@ -2,15 +2,11 @@ package nkamolba.router;
 
 import java.io.*;
 import java.net.*;
-import nkamolba.util.SocketStream;
 
-class BrokerTask extends SocketStream implements Runnable{
+class BrokerTask extends RouterTask implements Runnable{
 
-    Socket socket;
-
-    BrokerTask(Socket socket) {
-        super(socket);
-        this.socket = socket;
+    BrokerTask(Socket socket, String id) {
+        super(socket, id);
     }
 
     public void run() {

@@ -11,13 +11,12 @@ public class Market {
 
     public static void main(String[] args) {
         try (Socket socket = new Socket(ip, port)) {
-            InternalMarket internalMarket = new InternalMarket(socket);
+            InternalMarket internalMarket = new InternalMarket(socket, "N");
             internalMarket.run();
         } catch (UnknownHostException e) {
             System.out.println("Server not found: " + e.getMessage());
         } catch (IOException e) {
             System.out.println("I/O error: " + e.getMessage());
         }
-        
     }
 }

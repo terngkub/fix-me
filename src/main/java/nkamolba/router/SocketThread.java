@@ -22,30 +22,33 @@ class SocketThread<T extends Runnable> implements Runnable {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                assignUniqueId(socket);
-                submitTask(socket);
+                String id = assignUniqueId(socket);
+                submitTask(socket, id);
             }
         } catch (IOException e) {
             System.err.println("Server exception: " + e.getMessage());
         }
     }
 
-    private void assignUniqueId(Socket socket) {
+    private String assignUniqueId(Socket socket) {
+        String id = "";
         try {
-            String id = RoutingTable.registerSocket(socket);
+            id = RoutingTable.registerSocket(socket);
             System.out.println("Received new connection, assigned ID: " + id);
 
             OutputStream output = socket. getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
             writer.println(id);
         } catch (IOException e) {
-            System.err.println();
+            System.err.println("I/O error: " + e.getMessage());
         }
+
+        return id;
     }
 
-    private void submitTask(Socket socket) {
+    private void submitTask(Socket socket, String id) {
         try {
-            T task = taskClass.getDeclaredConstructor(Socket.class).newInstance(socket);
+            T task = taskClass.getDeclaredConstructor(Socket.class, String.class).newInstance(socket, id);
             executorService.submit(task);
         } catch (Exception e) {
             System.out.println("Found some exception: " + e.getMessage());
