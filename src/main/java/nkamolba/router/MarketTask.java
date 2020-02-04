@@ -13,6 +13,19 @@ class MarketTask extends RouterTask implements Runnable {
         System.out.println("Market [" + id + "] connected to the router");
         try {
             registerMarket();
+            while (socket.isConnected()) {
+
+                String response = reader.readLine();
+                if (response == null) {
+                    break;
+                }
+
+                Socket brokerSocket = RoutingTable.getSocketById("000001");
+                OutputStream brokerOutput = brokerSocket.getOutputStream();
+                PrintWriter brokerWriter = new PrintWriter(brokerOutput, true);
+                brokerWriter.println(response);
+            }
+
         } catch (IOException e) {
             System.err.println("I/O error: " + e.getMessage());
         }

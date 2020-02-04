@@ -28,11 +28,20 @@ class InternalMarket extends RouterClient {
     private void runDaemon() {
         while (true) {
             try {
-                String message = reader.readLine();
-                if (message == null) {
-                    break;
-                }
-                System.out.println("Got incoming message: " + message);
+
+                // receive message
+                String inMessage = reader.readLine();
+                if (inMessage == null) break;
+                System.out.println("Got incoming message: " + inMessage);
+
+                // parsing
+
+                // processing
+
+                // response
+                String outMessage = "I got your message";
+                writer.println(outMessage);
+
             } catch (IOException e) {
                 System.err.println("I/O error: " + e.getMessage());
                 break;

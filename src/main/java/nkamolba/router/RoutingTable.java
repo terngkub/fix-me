@@ -20,6 +20,10 @@ class RoutingTable {
         System.out.println("Registered market '" + marketName + "'");
     }
 
+    static synchronized Socket getSocketById(String id) {
+        return routingTable.get(id);
+    }
+
     static synchronized Socket getMarketSocket(String marketName) {
         return marketTable.get(marketName);
     }
