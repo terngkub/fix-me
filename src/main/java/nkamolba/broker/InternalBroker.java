@@ -25,17 +25,8 @@ class InternalBroker extends RouterClient {
                 break;
             }
             
-            try {
-
-                writer.println(line);
-                System.out.println("Sent message to router: " + line);
-
-                String response = reader.readLine();
-                System.out.println("Receive message from router: " + response);
-
-            } catch (IOException e) {
-                System.out.println("I/O error: " + e.getMessage());
-            }
+            writer.println(line);
+            System.out.println("Sent message to router: " + line);
         }
     }
 

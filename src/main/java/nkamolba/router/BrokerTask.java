@@ -19,8 +19,10 @@ class BrokerTask extends RouterTask implements Runnable{
                     break;
                 }
 
-                System.out.println("Received message: " + response);
-                writer.println("Router received message: " + response);
+                Socket marketSocket = RoutingTable.getMarketSocket("N");
+                OutputStream marketOutput = marketSocket.getOutputStream();
+                PrintWriter marketWriter = new PrintWriter(marketOutput, true);
+                marketWriter.println(response);
             }
         } catch (IOException e) {
             System.out.println("I/O error: " + e.getMessage());

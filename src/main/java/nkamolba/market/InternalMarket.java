@@ -1,5 +1,6 @@
 package nkamolba.market;
 
+import java.io.IOException;
 import java.net.Socket;
 import nkamolba.util.RouterClient;
 
@@ -26,7 +27,16 @@ class InternalMarket extends RouterClient {
     
     private void runDaemon() {
         while (true) {
-
+            try {
+                String message = reader.readLine();
+                if (message == null) {
+                    break;
+                }
+                System.out.println("Got incoming message: " + message);
+            } catch (IOException e) {
+                System.err.println("I/O error: " + e.getMessage());
+                break;
+            }
         }
     }
 }

@@ -19,4 +19,8 @@ class RoutingTable {
         marketTable.put(marketName, socket);
         System.out.println("Registered market '" + marketName + "'");
     }
+
+    static synchronized Socket getMarketSocket(String marketName) {
+        return marketTable.get(marketName);
+    }
 }

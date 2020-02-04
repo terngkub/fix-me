@@ -12,9 +12,9 @@ public class SocketStream {
         try {
 
             InputStream input = socket.getInputStream();
-            this. reader = new BufferedReader(new InputStreamReader(input));
+            this.reader = new BufferedReader(new InputStreamReader(input));
 
-            OutputStream output = socket. getOutputStream();
+            OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
 
         } catch (IOException e) {
